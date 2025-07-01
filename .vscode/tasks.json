@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Iniciar Servidor PHP",
+			"type": "shell",
+			"command": "composer",
+			"args": [
+				"run",
+				"serve"
+			],
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
