@@ -124,7 +124,7 @@ class ProjectFile {
         ];
     }
     
-    public static function create(array $data): bool {
+    public static function create(array $data): int {
         // Em uma implementação real, salvaria no banco ou arquivo
         $newId = max(array_keys(self::$projects)) + 1;
         $newProject = [
@@ -132,21 +132,21 @@ class ProjectFile {
             'title' => $data['title'],
             'description' => $data['description'],
             'status' => $data['status'] ?? 'pending',
-            'user_id' => $data['client_id'],
-            'client_id' => $data['client_id'],
+            'user_id' => $data['user_id'] ?? $data['client_id'],
+            'client_id' => $data['client_id'] ?? $data['user_id'],
             'analyst_id' => $data['analyst_id'] ?? null,
             'deadline' => $data['deadline'] ?? null,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'user_name' => self::getUserName($data['client_id']),
-            'client_name' => self::getUserName($data['client_id']),
-            'analyst_name' => $data['analyst_id'] ? self::getUserName($data['analyst_id']) : null,
+            'user_name' => self::getUserName($data['user_id'] ?? $data['client_id']),
+            'client_name' => self::getUserName($data['client_id'] ?? $data['user_id']),
+            'analyst_name' => isset($data['analyst_id']) && $data['analyst_id'] ? self::getUserName($data['analyst_id']) : null,
             'documents_count' => 0,
             'document_count' => 0
         ];
         
         self::$projects[$newId] = $newProject;
-        return true;
+        return $newId;
     }
     
     public static function update(int $id, array $data): bool {
@@ -206,6 +206,36 @@ class ProjectFile {
         return true;
     }
     
+    public static function addDocument(int $projectId, array $documentData): bool {
+        if (!isset(self::$projects[$projectId])) {
+            return false;
+        }
+        
+        // Em uma implementação real, isso seria salvo em uma tabela de documentos
+        // Por enquanto, vamos apenas incrementar o contador de documentos
+        if (!isset(self::$projects[$projectId]['documents'])) {
+            self::$projects[$projectId]['documents'] = [];
+        }
+        
+        $documentId = count(self::$projects[$projectId]['documents']) + 1;
+        $document = array_merge($documentData, [
+            'id' => $documentId,
+            'project_id' => $projectId,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        self::$projects[$projectId]['documents'][] = $document;
+        self::$projects[$projectId]['documents_count'] = count(self::$projects[$projectId]['documents']);
+        self::$projects[$projectId]['document_count'] = count(self::$projects[$projectId]['documents']);
+        self::$projects[$projectId]['updated_at'] = date('Y-m-d H:i:s');
+        
+        return true;
+    }
+    
+    public static function updateStatus(int $projectId, string $status): bool {
+        return self::changeStatus($projectId, $status);
+    }
+
     private static function getUserName(int $userId): string {
         // Simulação simples - em implementação real buscaria do UserFile
         $userNames = [

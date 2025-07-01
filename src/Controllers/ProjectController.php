@@ -25,7 +25,8 @@ class ProjectController {
         $analysts = [];
         
         if (Session::get('user_type') === 'admin') {
-            $analysts = User::findAll(['type' => 'analyst']);
+            $allUsers = User::findAll();
+            $analysts = array_filter($allUsers, fn($user) => $user['type'] === 'analyst');
         }
         
         View::make('projects.create')
