@@ -55,6 +55,20 @@ $router->group(['middleware' => 'admin'], function($router) {
     $router->get('/admin/users', 'AdminController@users');
     $router->get('/admin/projects', 'AdminController@projects');
     $router->post('/admin/users/{id}/toggle', 'AdminController@toggleUser');
+    
+    // Gestão de projetos
+    $router->get('/admin/projects/create', 'AdminController@createProject');
+    $router->post('/admin/projects', 'AdminController@storeProject');
+    $router->get('/admin/projects/{id}/edit', 'AdminController@editProject');
+    $router->post('/admin/projects/{id}', 'AdminController@updateProject');
+    $router->post('/admin/projects/{id}/delete', 'AdminController@deleteProject');
+    $router->post('/admin/projects/assign-analyst', 'AdminController@assignAnalyst');
+    $router->post('/admin/projects/change-status', 'AdminController@changeProjectStatus');
+    
+    // Gestão de usuários  
+    $router->get('/admin/users/{id}/view', 'AdminController@viewUser');
+    $router->get('/admin/users/{id}/edit', 'AdminController@editUser');
+    $router->post('/admin/users/{id}/update', 'AdminController@updateUser');
 });
 
 // Executar roteamento

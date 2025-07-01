@@ -191,6 +191,7 @@ include __DIR__ . '/../layouts/header.php';
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="/projects/<?= $project['id'] ?>">Ver Detalhes</a></li>
+                                                <li><a class="dropdown-item" href="/admin/projects/<?= $project['id'] ?>/edit">Editar</a></li>
                                                 <li><a class="dropdown-item" href="#" onclick="atribuirAnalista(<?= $project['id'] ?>)">Atribuir Analista</a></li>
                                                 <li><a class="dropdown-item" href="#" onclick="alterarStatus(<?= $project['id'] ?>)">Alterar Status</a></li>
                                                 <li><hr class="dropdown-divider"></li>
@@ -241,17 +242,63 @@ function filtrarProjetos() {
     });
 }
 
-function atribuirAnalista(id) {
-    alert('Atribuir analista ao projeto ID: ' + id + '\nFuncionalidade será implementada em breve.');
+function atribuirAnalista(projectId) {
+    const analystId = prompt('Digite o ID do analista (1=Admin, 2=Analista Sistema):');
+    if (analystId && analystId.trim() !== '') {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/projects/assign-analyst';
+        
+        const projectInput = document.createElement('input');
+        projectInput.type = 'hidden';
+        projectInput.name = 'project_id';
+        projectInput.value = projectId;
+        
+        const analystInput = document.createElement('input');
+        analystInput.type = 'hidden';
+        analystInput.name = 'analyst_id';
+        analystInput.value = analystId;
+        
+        form.appendChild(projectInput);
+        form.appendChild(analystInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
 }
 
-function alterarStatus(id) {
-    alert('Alterar status do projeto ID: ' + id + '\nFuncionalidade será implementada em breve.');
+function alterarStatus(projectId) {
+    const status = prompt('Digite o novo status (pending, in_progress, completed):');
+    if (status && ['pending', 'in_progress', 'completed'].includes(status)) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/projects/change-status';
+        
+        const projectInput = document.createElement('input');
+        projectInput.type = 'hidden';
+        projectInput.name = 'project_id';
+        projectInput.value = projectId;
+        
+        const statusInput = document.createElement('input');
+        statusInput.type = 'hidden';
+        statusInput.name = 'status';
+        statusInput.value = status;
+        
+        form.appendChild(projectInput);
+        form.appendChild(statusInput);
+        document.body.appendChild(form);
+        form.submit();
+    } else {
+        alert('Status inválido! Use: pending, in_progress ou completed');
+    }
 }
 
-function confirmarExclusao(id) {
+function confirmarExclusao(projectId) {
     if (confirm('Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita.')) {
-        alert('Excluir projeto ID: ' + id + '\nFuncionalidade será implementada em breve.');
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/projects/${projectId}/delete`;
+        document.body.appendChild(form);
+        form.submit();
     }
 }
 

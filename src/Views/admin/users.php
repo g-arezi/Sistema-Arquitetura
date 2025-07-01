@@ -150,12 +150,12 @@ use App\Core\Session;
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="verUsuario(<?= $user['id'] ?>)">
+                                            <a href="/admin/users/<?= $user['id'] ?>/view" class="btn btn-outline-primary">
                                                 <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editarUsuario(<?= $user['id'] ?>)">
+                                            </a>
+                                            <a href="/admin/users/<?= $user['id'] ?>/edit" class="btn btn-outline-secondary">
                                                 <i class="bi bi-pencil"></i>
-                                            </button>
+                                            </a>
                                             <?php if ($user['id'] != Session::get('user_id')): ?>
                                                 <form method="POST" action="/admin/users/<?= $user['id'] ?>/toggle" class="d-inline">
                                                     <button type="submit" class="btn btn-outline-<?= $user['active'] ? 'warning' : 'success' ?>" 
@@ -218,14 +218,6 @@ function filtrarUsuarios() {
         
         row.style.display = show ? '' : 'none';
     });
-}
-
-function verUsuario(id) {
-    alert('Visualizar usuário ID: ' + id + '\nFuncionalidade será implementada em breve.');
-}
-
-function editarUsuario(id) {
-    alert('Editar usuário ID: ' + id + '\nFuncionalidade será implementada em breve.');
 }
 
 // Filtro em tempo real na busca

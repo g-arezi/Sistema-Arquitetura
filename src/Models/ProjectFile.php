@@ -123,4 +123,97 @@ class ProjectFile {
             ]
         ];
     }
+    
+    public static function create(array $data): bool {
+        // Em uma implementação real, salvaria no banco ou arquivo
+        $newId = max(array_keys(self::$projects)) + 1;
+        $newProject = [
+            'id' => $newId,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'status' => $data['status'] ?? 'pending',
+            'user_id' => $data['client_id'],
+            'client_id' => $data['client_id'],
+            'analyst_id' => $data['analyst_id'] ?? null,
+            'deadline' => $data['deadline'] ?? null,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+            'user_name' => self::getUserName($data['client_id']),
+            'client_name' => self::getUserName($data['client_id']),
+            'analyst_name' => $data['analyst_id'] ? self::getUserName($data['analyst_id']) : null,
+            'documents_count' => 0,
+            'document_count' => 0
+        ];
+        
+        self::$projects[$newId] = $newProject;
+        return true;
+    }
+    
+    public static function update(int $id, array $data): bool {
+        if (!isset(self::$projects[$id])) {
+            return false;
+        }
+        
+        foreach ($data as $key => $value) {
+            if (isset(self::$projects[$id][$key])) {
+                self::$projects[$id][$key] = $value;
+            }
+        }
+        
+        self::$projects[$id]['updated_at'] = date('Y-m-d H:i:s');
+        
+        // Atualizar nomes se IDs mudaram
+        if (isset($data['client_id'])) {
+            self::$projects[$id]['user_name'] = self::getUserName($data['client_id']);
+            self::$projects[$id]['client_name'] = self::getUserName($data['client_id']);
+        }
+        
+        if (isset($data['analyst_id'])) {
+            self::$projects[$id]['analyst_name'] = $data['analyst_id'] ? self::getUserName($data['analyst_id']) : null;
+        }
+        
+        return true;
+    }
+    
+    public static function delete(int $id): bool {
+        if (isset(self::$projects[$id])) {
+            unset(self::$projects[$id]);
+            return true;
+        }
+        return false;
+    }
+    
+    public static function assignAnalyst(int $projectId, int $analystId): bool {
+        if (!isset(self::$projects[$projectId])) {
+            return false;
+        }
+        
+        self::$projects[$projectId]['analyst_id'] = $analystId;
+        self::$projects[$projectId]['analyst_name'] = self::getUserName($analystId);
+        self::$projects[$projectId]['updated_at'] = date('Y-m-d H:i:s');
+        
+        return true;
+    }
+    
+    public static function changeStatus(int $projectId, string $status): bool {
+        if (!isset(self::$projects[$projectId])) {
+            return false;
+        }
+        
+        self::$projects[$projectId]['status'] = $status;
+        self::$projects[$projectId]['updated_at'] = date('Y-m-d H:i:s');
+        
+        return true;
+    }
+    
+    private static function getUserName(int $userId): string {
+        // Simulação simples - em implementação real buscaria do UserFile
+        $userNames = [
+            1 => 'Administrador',
+            2 => 'Analista Sistema', 
+            3 => 'Cliente Teste'
+        ];
+        
+        return $userNames[$userId] ?? 'Usuário Desconhecido';
+    }
 }
