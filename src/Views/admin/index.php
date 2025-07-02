@@ -699,6 +699,42 @@ function animateValue(element, start, end, duration) {
     };
     window.requestAnimationFrame(step);
 }
+
+// Inicialização global
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar contadores animados
+    const animateCounters = () => {
+        document.querySelectorAll('.card-body h3, .card-body h4').forEach(counter => {
+            const finalValue = parseInt(counter.textContent);
+            if (!isNaN(finalValue)) {
+                // Reset para zero
+                counter.textContent = '0';
+                
+                // Animar até o valor final
+                let currentValue = 0;
+                const duration = 1500; // ms
+                const increment = Math.ceil(finalValue / (duration / 50));
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= finalValue) {
+                        counter.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = currentValue;
+                    }
+                }, 50);
+            }
+        });
+    };
+    
+    // Executar animação após carregamento
+    setTimeout(animateCounters, 300);
+    
+    // Ativar todos os tooltips
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
+});
 </script>
 
 <style>

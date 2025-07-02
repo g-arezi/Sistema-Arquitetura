@@ -1,0 +1,23 @@
+# .htaccess básico para resolver problema 403
+Options +FollowSymLinks -Indexes
+RewriteEngine On
+
+# Permitir acesso a todos
+<Files *>
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Diretiva de Permissão geral
+<Directory />
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+# Handle client-side routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Enviar todas as requisições para index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

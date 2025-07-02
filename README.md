@@ -88,6 +88,28 @@ Caso contrário, o sistema funciona com dados de demonstração em arquivo.
 
 6. **Acesse o sistema**
    - URL: `http://localhost:8000`
+   
+## Deployment em Produção
+
+### Implantação na Hostinger
+
+Para implantar o sistema na Hostinger, siga estes passos:
+
+1. **Prepare os arquivos para Hostinger**
+   ```bash
+   prepare-hostinger.bat
+   ```
+
+2. **Siga o tutorial detalhado**
+   - Consulte o arquivo `TUTORIAL-HOSTINGER.md` para instruções completas
+   - Configure o arquivo `config/hostinger.php` com suas credenciais
+
+3. **Upload dos arquivos**
+   - Faça upload da pasta `deployment-hostinger` para o diretório principal da sua hospedagem
+   
+Para instruções detalhadas sobre deployment em outros ambientes, consulte:
+- `DEPLOY-PRODUCAO.md` - Guia geral de implantação em produção
+- `CHECKLIST-DEPLOY.md` - Checklist para garantir uma implantação completa
 
 ## Estrutura do Projeto
 

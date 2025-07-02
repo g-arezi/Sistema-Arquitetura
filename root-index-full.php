@@ -1,9 +1,21 @@
 <?php
+// Arquivo index.php para a raiz (public_html) da Hostinger
+// Este arquivo gerencia as rotas diretamente na raiz
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// Exibir erros para debug (remova em produção)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+// Tentar carregar o autoloader
+$autoloader_path = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoloader_path)) {
+    require_once $autoloader_path;
+} else {
+    die("Erro: Autoloader não encontrado. Verifique se a estrutura de diretórios está correta.");
+}
 
 use App\Core\Router;
-use App\Core\Database;
 use App\Core\Session;
 
 // Inicializar sessão
@@ -17,12 +29,12 @@ header('X-XSS-Protection: 1; mode=block');
 // Debug mode
 $debugMode = isset($_GET['debug']);
 if ($debugMode) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
     echo '<h2>Debug Mode Enabled</h2>';
     echo '<pre>';
     echo 'Request URI: ' . $_SERVER['REQUEST_URI'] . "\n";
     echo 'PHP Version: ' . phpversion() . "\n";
+    echo 'Document Root: ' . $_SERVER['DOCUMENT_ROOT'] . "\n";
+    echo 'Current Directory: ' . __DIR__ . "\n";
     echo '</pre>';
 }
 
@@ -43,6 +55,10 @@ $router->get('/help/urls', 'HelpController@urls');
 
 // Rota de teste para a página de atividades
 $router->get('/test-activities', 'TestController@activities');
+
+// Rota específica para debug-routes.php (adicionando para resolver o problema 404)
+$router->get('/debug-routes.php', 'HelperController@debugRouter');
+$router->get('/debug-routes', 'HelperController@debugRouter');
 
 // Redirecionamentos para URLs comuns com .php
 $router->get('/dashboard.php', 'RedirectController@dashboardPhp');

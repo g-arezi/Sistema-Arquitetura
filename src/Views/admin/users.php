@@ -28,8 +28,8 @@ use App\Core\Session;
     <div class="card mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label">Filtrar por tipo:</label>
+                <div class="col-md-2">
+                    <label class="form-label">Tipo de usuário:</label>
                     <select class="form-select" id="filterType">
                         <option value="">Todos os tipos</option>
                         <option value="admin">Administrador</option>
@@ -37,12 +37,20 @@ use App\Core\Session;
                         <option value="client">Cliente</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="form-label">Status:</label>
                     <select class="form-select" id="filterStatus">
                         <option value="">Todos</option>
                         <option value="1">Ativos</option>
                         <option value="0">Inativos</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Aprovação:</label>
+                    <select class="form-select" id="filterApproval">
+                        <option value="">Todos</option>
+                        <option value="1">Aprovados</option>
+                        <option value="0">Pendentes</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -79,13 +87,14 @@ use App\Core\Session;
                                 <th>Email</th>
                                 <th>Tipo</th>
                                 <th>Status</th>
+                                <th>Aprovação</th>
                                 <th>Cadastrado</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($users as $user): ?>
-                                <tr data-type="<?= $user['type'] ?>" data-status="<?= $user['active'] ?>">
+                                <tr data-type="<?= $user['type'] ?>" data-status="<?= $user['active'] ?>" data-approval="<?= $user['approved'] ?? 0 ?>">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-circle me-3">
@@ -144,6 +153,19 @@ use App\Core\Session;
                                         <?php endif; ?>
                                     </td>
                                     <td>
+                                        <?php if (isset($user['approved']) && $user['approved']): ?>
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check-lg"></i>
+                                                Aprovado
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning text-dark">
+                                                <i class="bi bi-clock"></i>
+                                                Pendente
+                                            </span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
                                         <small class="text-muted">
                                             <?= date('d/m/Y H:i', strtotime($user['created_at'])) ?>
                                         </small>
@@ -180,6 +202,67 @@ use App\Core\Session;
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- Seção de Aprovações Pendentes -->
+    <?php if (isset($pendingUsers) && count($pendingUsers) > 0): ?>
+        <div class="card mb-4 border-warning">
+            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-clock-history me-2"></i>
+                    Usuários Pendentes de Aprovação
+                </div>
+                <div>
+                    <span class="badge bg-dark"><?= count($pendingUsers) ?> pendente(s)</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Data de Cadastro</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($pendingUsers as $user): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($user['name']) ?></td>
+                                    <td><?= htmlspecialchars($user['email']) ?></td>
+                                    <td>
+                                        <span class="badge bg-<?= $user['type'] === 'admin' ? 'danger' : ($user['type'] === 'analyst' ? 'info' : 'success') ?>">
+                                            <?= ucfirst(htmlspecialchars($user['type'])) ?>
+                                        </span>
+                                    </td>
+                                    <td><?= date('d/m/Y H:i', strtotime($user['created_at'])) ?></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <form action="/admin/users/<?= $user['id'] ?>/approve" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-success me-1" onclick="return confirm('Confirma a aprovação deste usuário?')">
+                                                    <i class="bi bi-check-lg"></i> Aprovar
+                                                </button>
+                                            </form>
+                                            <form action="/admin/users/<?= $user['id'] ?>/reject" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Confirma a rejeição deste usuário?')">
+                                                    <i class="bi bi-x-lg"></i> Rejeitar
+                                                </button>
+                                            </form>
+                                            <a href="/admin/users/<?= $user['id'] ?>/view" class="btn btn-secondary ms-1">
+                                                <i class="bi bi-eye"></i> Ver
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 <style>
@@ -201,6 +284,7 @@ use App\Core\Session;
 function filtrarUsuarios() {
     const filterType = document.getElementById('filterType').value;
     const filterStatus = document.getElementById('filterStatus').value;
+    const filterApproval = document.getElementById('filterApproval').value;
     const searchTerm = document.getElementById('searchUsers').value.toLowerCase();
     
     const rows = document.querySelectorAll('#usersTable tbody tr');
@@ -208,12 +292,14 @@ function filtrarUsuarios() {
     rows.forEach(row => {
         const type = row.getAttribute('data-type');
         const status = row.getAttribute('data-status');
+        const approval = row.getAttribute('data-approval');
         const text = row.textContent.toLowerCase();
         
         let show = true;
         
         if (filterType && type !== filterType) show = false;
         if (filterStatus && status !== filterStatus) show = false;
+        if (filterApproval && approval !== filterApproval) show = false;
         if (searchTerm && !text.includes(searchTerm)) show = false;
         
         row.style.display = show ? '' : 'none';
@@ -224,6 +310,7 @@ function filtrarUsuarios() {
 document.getElementById('searchUsers').addEventListener('input', filtrarUsuarios);
 document.getElementById('filterType').addEventListener('change', filtrarUsuarios);
 document.getElementById('filterStatus').addEventListener('change', filtrarUsuarios);
+document.getElementById('filterApproval').addEventListener('change', filtrarUsuarios);
 </script>
 
 <?php include __DIR__ . '/../layouts/footer.php'; ?>

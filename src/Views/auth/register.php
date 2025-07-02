@@ -14,6 +14,11 @@ include __DIR__ . '/../layouts/header.php';
                         <p class="text-muted">Preencha os dados para se cadastrar</p>
                     </div>
                     
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <strong>Informação:</strong> Após o cadastro, sua conta precisará ser aprovada por um administrador ou analista antes que você possa acessar o sistema.
+                    </div>
+                    
                     <form method="POST" action="/register">
                         <div class="row">
                             <div class="col-md-6 mb-3">

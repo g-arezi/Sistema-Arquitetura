@@ -1,0 +1,43 @@
+# .htaccess para a raiz do site (public_html)
+# Este arquivo ajuda a resolver problemas de acesso 403
+
+# Habilitar o mecanismo de reescrita
+RewriteEngine On
+
+# Permitir acesso a todos os arquivos
+<FilesMatch ".*">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Definir diretivas básicas
+Options +FollowSymLinks -Indexes
+
+# Definir manipulador padrão
+DirectoryIndex index.php
+
+# Se o arquivo ou diretório não existir, redirecionar para o index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Configurações de PHP através do .htaccess
+<IfModule mod_php8.c>
+    php_flag display_errors On
+    php_value error_reporting E_ALL
+</IfModule>
+
+# Impedir listagem de diretórios
+Options -Indexes
+
+# Permitir acesso ao .htaccess (para debugging)
+<Files .htaccess>
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Configurações básicas de segurança
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
