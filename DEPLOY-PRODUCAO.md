@@ -1,240 +1,425 @@
-# Guia de Implantação em Produção do Sistema-Arquitetura
+# 🚀 Guia de Deploy para Produção - Sistema de Arquitetura
 
-Este guia fornece instruções detalhadas para implantar o Sistema-Arquitetura em um ambiente de produção.
+Este documento contém todas as instruções necessárias para colocar o Sistema de Arquitetura em produção.
 
-## Pré-requisitos
-- Servidor Linux (Ubuntu/Debian recomendado)
-- PHP 8.0+
-- MySQL 5.7+ ou MariaDB 10.3+
-- Nginx ou Apache
-- Domínio configurado para apontar para o servidor
-- Acesso SSH ao servidor
-- Permissões para instalar software e configurar serviços
+## 🎯 Escolha da Plataforma
 
-## 1. Preparação Inicial
+### 🐧 Linux (Ubuntu/CentOS)
+- **Recomendado para**: Servidores dedicados, VPS, cloud
+- **Servidor Web**: Apache/Nginx
+- **Documentação**: Veja seções abaixo
 
-### 1.1 Verificar código e commit
+### 🪟 Windows Server/IIS
+- **Recomendado para**: Ambientes Windows corporativos
+- **Servidor Web**: IIS com FastCGI
+- **Documentação**: [DEPLOY-WINDOWS-IIS.md](DEPLOY-WINDOWS-IIS.md)
+
+### � Docker
+- **Recomendado para**: Containers, microserviços
+- **Plataforma**: Docker Compose
+- **Documentação**: Em desenvolvimento
+
+---
+
+## �📋 Pré-requisitos Linux
+
+### Servidor
+- **Sistema Operacional**: Linux (Ubuntu 20.04+ recomendado)  
+- **Servidor Web**: Apache 2.4+ ou Nginx 1.18+
+- **PHP**: 7.4+ ou 8.0+ (recomendado)
+- **Banco de dados**: MySQL 8.0+ ou MariaDB 10.5+
+- **Memória RAM**: Mínimo 2GB, recomendado 4GB+
+- **Espaço em disco**: Mínimo 10GB livres
+
+### Extensões PHP Necessárias
 ```bash
-# Certifique-se de que todas as alterações estão commitadas
-git status
-git add .
-git commit -m "Preparação para produção"
-git push
+php-mysql php-pdo php-mbstring php-json php-curl php-gd 
+php-zip php-xml php-intl php-fileinfo php-openssl
 ```
 
-### 1.2 Exportar o código para implantação
+### Ferramentas
+- Git
+- Composer
+- Certbot (para SSL Let's Encrypt)
+
+## 🔧 Preparação do Servidor Linux
+
+### 1. Atualizar sistema
 ```bash
-# No Windows, você pode criar um ZIP do projeto
-# Exclua pastas desnecessárias como .git, .vscode, etc.
+sudo apt update && sudo apt upgrade -y
 ```
 
-## 2. Configuração do Servidor
-
-### 2.1 Upload do script de preparação
-Faça upload do arquivo `scripts/prepare-production.sh` para o servidor e execute-o:
-
+### 2. Instalar Apache e PHP
 ```bash
-# No servidor
-chmod +x prepare-production.sh
-sudo ./prepare-production.sh
+sudo apt install apache2 php libapache2-mod-php php-mysql php-pdo php-mbstring php-json php-curl php-gd php-zip php-xml php-intl php-fileinfo php-openssl -y
 ```
 
-Esse script irá:
-- Instalar o PHP 8.0+ com extensões necessárias
-- Configurar o Nginx
-- Aplicar configurações de segurança do PHP
-- Preparar diretórios e permissões
-
-### 2.2 Upload dos arquivos do projeto
-Faça upload dos arquivos do projeto para o diretório configurado no script (`/var/www/html/sistema-arquitetura` por padrão).
-
+### 3. Instalar MySQL
 ```bash
-# Usando SCP (do seu computador local)
-scp -r /caminho/local/Sistema-Arquitetura/* usuario@seu-servidor:/var/www/html/sistema-arquitetura/
-
-# OU usando SFTP com ferramentas como FileZilla, WinSCP, etc.
+sudo apt install mysql-server -y
+sudo mysql_secure_installation
 ```
 
-### 2.3 Permissões de arquivos
-No servidor, configure as permissões corretas:
-
+### 4. Instalar Composer
 ```bash
-cd /var/www/html/sistema-arquitetura
-find . -type f -exec chmod 644 {} \;
-find . -type d -exec chmod 755 {} \;
-chmod -R 775 storage/
-chown -R www-data:www-data .
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+sudo chmod +x /usr/local/bin/composer
 ```
 
-## 3. Configuração do Banco de Dados
-
-### 3.1 Criar banco de dados e usuário
-
+### 5. Instalar Git
 ```bash
-# Acesse o MySQL/MariaDB
-mysql -u root -p
+sudo apt install git -y
+```
 
-# No prompt do MySQL
+## 🗄️ Configuração do Banco de Dados
+
+### 1. Criar banco e usuário
+```sql
+-- Conectar como root
+sudo mysql -u root -p
+
+-- Criar banco
 CREATE DATABASE sistema_arquitetura CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'db_user_prod'@'localhost' IDENTIFIED BY 'sua_senha_segura';
-GRANT ALL PRIVILEGES ON sistema_arquitetura.* TO 'db_user_prod'@'localhost';
+
+-- Criar usuário
+CREATE USER 'sistema_user'@'localhost' IDENTIFIED BY 'SENHA_SUPER_SEGURA_AQUI';
+
+-- Conceder permissões
+GRANT ALL PRIVILEGES ON sistema_arquitetura.* TO 'sistema_user'@'localhost';
+
+-- Aplicar mudanças
 FLUSH PRIVILEGES;
+
+-- Sair
 EXIT;
 ```
 
-### 3.2 Importar estrutura do banco
-Se você tiver um arquivo SQL com a estrutura do banco:
-
+### 2. Importar estrutura do banco
 ```bash
-mysql -u db_user_prod -p sistema_arquitetura < /caminho/para/estrutura.sql
+# Se você tem um dump SQL
+mysql -u sistema_user -p sistema_arquitetura < database_schema.sql
 ```
 
-## 4. Configuração da Aplicação
+## 📁 Deploy da Aplicação
 
-### 4.1 Configurar arquivo de produção
-Edite o arquivo `config/production.php` com as informações do seu ambiente:
-
+### 1. Preparar diretório
 ```bash
-cd /var/www/html/sistema-arquitetura
-nano config/production.php
+sudo mkdir -p /var/www/html
+sudo chown -R $USER:www-data /var/www/html
 ```
 
-Altere as seguintes configurações:
-- Credenciais do banco de dados
-- URL da aplicação
-- Configurações de email (SMTP)
-- Caminhos de armazenamento
-
-### 4.2 Instalar dependências do Composer
-
+### 2. Clonar repositório
 ```bash
-cd /var/www/html/sistema-arquitetura
+cd /var/www/html
+git clone https://github.com/seu-usuario/sistema-arquitetura.git .
+```
+
+### 3. Instalar dependências
+```bash
 composer install --no-dev --optimize-autoloader
 ```
 
-## 5. Configuração do SSL (HTTPS)
-
-### 5.1 Instalar Certbot
-
+### 4. Configurar ambiente
 ```bash
-sudo apt-get update
-sudo apt-get install certbot python3-certbot-nginx
+# Copiar arquivo de configuração
+cp .env.production .env.production.local
+
+# Editar configurações (usar seu editor preferido)
+nano .env.production.local
 ```
 
-### 5.2 Obter e configurar certificado SSL
-
+**Configurações importantes no .env.production.local:**
 ```bash
-sudo certbot --nginx -d sistema-arquitetura.com.br -d www.sistema-arquitetura.com.br
+# Ambiente
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://seu-dominio.com.br
+
+# Banco de Dados
+DB_HOST=localhost
+DB_NAME=sistema_arquitetura
+DB_USER=sistema_user
+DB_PASS=SENHA_SUPER_SEGURA_AQUI
+
+# Email (configure com seus dados reais)
+MAIL_HOST=smtp.seu-provedor.com
+MAIL_USERNAME=noreply@seu-dominio.com.br
+MAIL_PASSWORD=sua_senha_email
+
+# Segurança
+SESSION_SECURE=true
 ```
 
-Siga as instruções do Certbot e escolha a opção para redirecionar todo o tráfego HTTP para HTTPS.
-
-## 6. Configurações Finais
-
-### 6.1 Verificar logs e permissões
-
+### 5. Configurar permissões
 ```bash
-# Verifique os logs do Nginx
-sudo tail -f /var/log/nginx/error.log
-
-# Verifique os logs do PHP
-sudo tail -f /var/log/php/sistema-arquitetura-errors.log
+# Executar script de deploy
+chmod +x scripts/deploy.sh
+sudo ./scripts/deploy.sh
 ```
 
-### 6.2 Configurar backup automático
-Crie um script de backup para o banco de dados e arquivos importantes:
-
+**Ou configurar manualmente:**
 ```bash
-# Exemplo simples de script de backup
-#!/bin/bash
-BACKUP_DIR="/var/backups/sistema-arquitetura"
-DATE=$(date +%Y-%m-%d)
-mkdir -p $BACKUP_DIR
+# Proprietário
+sudo chown -R www-data:www-data /var/www/html
 
-# Backup do banco de dados
-mysqldump -u db_user_prod -p'sua_senha_segura' sistema_arquitetura > $BACKUP_DIR/db-$DATE.sql
+# Permissões de diretórios
+sudo find /var/www/html -type d -exec chmod 755 {} \;
 
-# Backup de arquivos importantes
-tar -czf $BACKUP_DIR/files-$DATE.tar.gz /var/www/html/sistema-arquitetura/storage
+# Permissões de arquivos
+sudo find /var/www/html -type f -exec chmod 644 {} \;
 
-# Manter apenas os últimos 7 dias de backups
-find $BACKUP_DIR -name "db-*" -type f -mtime +7 -delete
-find $BACKUP_DIR -name "files-*" -type f -mtime +7 -delete
+# Diretórios especiais
+sudo mkdir -p /var/www/html/public/uploads
+sudo mkdir -p /var/www/html/storage/{documents,temp}
+sudo chmod -R 755 /var/www/html/public/uploads
+sudo chmod -R 755 /var/www/html/storage
+
+# Logs
+sudo mkdir -p /var/log/sistema-arquitetura
+sudo chmod -R 755 /var/log/sistema-arquitetura
+sudo chown -R www-data:www-data /var/log/sistema-arquitetura
 ```
 
-Adicione este script ao crontab para execução diária:
+## 🌐 Configuração do Apache
 
+### 1. Criar VirtualHost
 ```bash
+sudo nano /etc/apache2/sites-available/sistema-arquitetura.conf
+```
+
+**Conteúdo do arquivo:**
+```apache
+<VirtualHost *:80>
+    ServerName seu-dominio.com.br
+    ServerAlias www.seu-dominio.com.br
+    DocumentRoot /var/www/html/public
+    
+    <Directory /var/www/html/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    # Logs
+    ErrorLog /var/log/apache2/sistema-arquitetura-error.log
+    CustomLog /var/log/apache2/sistema-arquitetura-access.log combined
+    
+    # Security headers
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</VirtualHost>
+```
+
+### 2. Ativar site e módulos
+```bash
+# Ativar módulos necessários
+sudo a2enmod rewrite
+sudo a2enmod headers
+sudo a2enmod ssl
+
+# Ativar site
+sudo a2ensite sistema-arquitetura.conf
+
+# Desativar site padrão
+sudo a2dissite 000-default.conf
+
+# Reiniciar Apache
+sudo systemctl restart apache2
+```
+
+## 🔒 Configuração SSL (Let's Encrypt)
+
+### 1. Instalar Certbot
+```bash
+sudo apt install certbot python3-certbot-apache -y
+```
+
+### 2. Obter certificado
+```bash
+sudo certbot --apache -d seu-dominio.com.br -d www.seu-dominio.com.br
+```
+
+### 3. Renovação automática
+```bash
+# Testar renovação
+sudo certbot renew --dry-run
+
+# Adicionar ao cron
 sudo crontab -e
-# Adicione a linha:
-0 3 * * * /caminho/para/backup.sh > /dev/null 2>&1
+
+# Adicionar linha:
+0 12 * * * /usr/bin/certbot renew --quiet
 ```
 
-## 7. Teste de Acesso
+## 📊 Monitoramento e Logs
 
-### 7.1 Validar funcionamento
-- Acesse o site no navegador usando HTTPS
-- Teste o processo de registro de usuário
-- Teste o processo de aprovação de usuário
-- Verifique se todas as funcionalidades estão operando corretamente
-
-### 7.2 Monitoramento inicial
-Monitore os logs do servidor nos primeiros dias para identificar possíveis problemas:
-
+### 1. Configurar logrotate
 ```bash
-# Monitor de recursos
-htop
-
-# Logs do Nginx
-tail -f /var/log/nginx/error.log
-
-# Logs do PHP
-tail -f /var/log/php/sistema-arquitetura-errors.log
+sudo nano /etc/logrotate.d/sistema-arquitetura
 ```
 
-## 8. Troubleshooting
+**Conteúdo:**
+```
+/var/log/sistema-arquitetura/*.log {
+    daily
+    missingok
+    rotate 30
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
+```
 
-### 8.1 Problemas comuns e soluções
-
-#### Erro 500 - Internal Server Error
-- Verifique os logs do PHP
-- Verifique permissões de arquivos
-- Confirme se as extensões PHP necessárias estão instaladas
-
-#### Erro de conexão ao banco de dados
-- Verifique as credenciais no arquivo `config/production.php`
-- Verifique se o serviço MySQL está rodando: `systemctl status mysql`
-- Teste a conexão manual: `mysql -u db_user_prod -p sistema_arquitetura`
-
-#### Problemas de permissão
+### 2. Configurar backup automático
 ```bash
-# Redefina as permissões dos arquivos
-cd /var/www/html/sistema-arquitetura
-find . -type f -exec chmod 644 {} \;
-find . -type d -exec chmod 755 {} \;
-chmod -R 775 storage/
-chown -R www-data:www-data .
+# Dar permissão ao script
+chmod +x scripts/backup.sh
+
+# Adicionar ao cron
+sudo crontab -e
+
+# Backup diário às 2:00 AM
+0 2 * * * /var/www/html/scripts/backup.sh
 ```
 
-## 9. Otimizações Adicionais (Opcional)
+## 🛡️ Segurança Adicional
 
-### 9.1 Configurar Caching
-Se o site tiver tráfego alto, considere adicionar caching:
-
+### 1. Firewall
 ```bash
-# Instalar Redis
-sudo apt-get install redis-server php-redis
+# Ativar UFW
+sudo ufw enable
 
-# Configurar em config/production.php
+# Permitir SSH
+sudo ufw allow 22
+
+# Permitir HTTP e HTTPS
+sudo ufw allow 80
+sudo ufw allow 443
+
+# Verificar status
+sudo ufw status
 ```
 
-### 9.2 Configurar CDN
-Para melhorar o desempenho global, considere usar um CDN como Cloudflare.
+### 2. Fail2Ban (proteção contra ataques)
+```bash
+sudo apt install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+```
 
-## 10. Verificação Pós-Produção
+### 3. Configurar PHP para produção
+```bash
+sudo nano /etc/php/8.0/apache2/php.ini
+```
 
-Após uma semana em produção, faça estas verificações:
-- Revisar logs em busca de erros recorrentes
-- Verificar desempenho do servidor
-- Confirmar que os backups estão sendo realizados corretamente
-- Atualizar documentação se necessário
+**Configurações importantes:**
+```ini
+display_errors = Off
+log_errors = On
+error_log = /var/log/sistema-arquitetura/php_errors.log
+max_execution_time = 60
+max_input_time = 60
+memory_limit = 256M
+post_max_size = 16M
+upload_max_filesize = 15M
+session.cookie_httponly = On
+session.cookie_secure = On
+expose_php = Off
+```
+
+## ✅ Verificação Final
+
+### 1. Testar conectividade
+```bash
+curl -I http://seu-dominio.com.br
+curl -I https://seu-dominio.com.br
+```
+
+### 2. Verificar logs
+```bash
+tail -f /var/log/apache2/sistema-arquitetura-error.log
+tail -f /var/log/sistema-arquitetura/php_errors.log
+```
+
+### 3. Testar funcionalidades
+- [ ] Página inicial carrega
+- [ ] Login funciona
+- [ ] Upload de arquivos funciona
+- [ ] Envio de emails funciona
+- [ ] Dashboard carrega corretamente
+
+## 🔄 Manutenção Contínua
+
+### Atualizações
+```bash
+# Entrar no diretório do projeto
+cd /var/www/html
+
+# Backup antes da atualização
+./scripts/backup.sh
+
+# Atualizar código
+git pull origin main
+
+# Instalar/atualizar dependências
+composer install --no-dev --optimize-autoloader
+
+# Limpar cache
+composer clear-cache
+
+# Reiniciar Apache
+sudo systemctl restart apache2
+```
+
+### Monitoramento
+- Configurar alertas para espaço em disco
+- Monitorar logs de erro
+- Verificar performance do banco de dados
+- Monitorar tempo de resposta do site
+
+## 🆘 Troubleshooting
+
+### Problemas Comuns
+
+**Erro 500:**
+- Verificar logs do Apache: `/var/log/apache2/sistema-arquitetura-error.log`
+- Verificar logs do PHP: `/var/log/sistema-arquitetura/php_errors.log`
+- Verificar permissões dos arquivos
+
+**Erro de banco de dados:**
+- Verificar credenciais em `.env.production.local`
+- Testar conexão: `mysql -u usuario -p banco`
+- Verificar se o serviço MySQL está rodando: `sudo systemctl status mysql`
+
+**Upload não funciona:**
+- Verificar permissões do diretório `public/uploads`
+- Verificar configurações PHP: `upload_max_filesize`, `post_max_size`
+- Verificar espaço em disco
+
+**Emails não são enviados:**
+- Verificar configurações SMTP em `.env.production.local`
+- Testar conectividade SMTP
+- Verificar logs de email
+
+## 📞 Suporte
+
+Em caso de problemas durante o deploy:
+
+1. Verificar logs detalhados
+2. Consultar documentação do servidor web
+3. Verificar configurações de PHP e MySQL
+4. Contatar administrador do sistema
+
+---
+
+**Importante**: Sempre faça backup antes de qualquer alteração em produção!
+
+## 📚 Links Úteis
+
+- [Documentação do Apache](https://httpd.apache.org/docs/)
+- [Documentação do PHP](https://www.php.net/docs.php)
+- [Let's Encrypt](https://letsencrypt.org/)
+- [Composer](https://getcomposer.org/)
+- [MySQL](https://dev.mysql.com/doc/)

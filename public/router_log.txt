@@ -48,3 +48,201 @@
 [2025-07-02 19:26:13] Routing through index.php: /debug_routes.php
 [2025-07-02 19:26:15] Request: GET /debug-routes.php
 [2025-07-02 19:26:15] PHP file: /debug-routes.php
+[2025-07-02 22:45:04] Request: GET /
+[2025-07-02 22:45:04] Routing through index.php: /
+[2025-07-02 22:45:04] Request: GET /debug-routes.php
+[2025-07-02 22:45:04] PHP file: /debug-routes.php
+[2025-07-02 22:45:04] Request: GET /css/style.css
+[2025-07-02 22:45:04] Static file: /css/style.css
+[2025-07-02 22:45:04] Request: GET /js/app.js
+[2025-07-02 22:45:04] Static file: /js/app.js
+[2025-07-02 22:45:31] Request: GET /
+[2025-07-02 22:45:31] Routing through index.php: /
+[2025-07-02 22:45:31] Request: GET /debug-routes.php
+[2025-07-02 22:45:31] PHP file: /debug-routes.php
+[2025-07-02 22:45:31] Request: GET /css/style.css
+[2025-07-02 22:45:31] Static file: /css/style.css
+[2025-07-02 22:45:31] Request: GET /js/app.js
+[2025-07-02 22:45:31] Static file: /js/app.js
+[2025-07-02 22:45:31] Request: GET /favicon.ico
+[2025-07-02 22:45:31] Static file: /favicon.ico
+[2025-07-02 22:45:36] Request: GET /dashboard
+[2025-07-02 22:45:36] Routing through index.php: /dashboard
+[2025-07-02 22:45:36] Request: GET /css/style.css
+[2025-07-02 22:45:36] Static file: /css/style.css
+[2025-07-02 22:45:36] Request: GET /js/app.js
+[2025-07-02 22:45:36] Static file: /js/app.js
+[2025-07-02 22:45:39] Request: GET /projects
+[2025-07-02 22:45:39] Routing through index.php: /projects
+[2025-07-02 22:45:39] Request: GET /css/style.css
+[2025-07-02 22:45:39] Static file: /css/style.css
+[2025-07-02 22:45:39] Request: GET /js/app.js
+[2025-07-02 22:45:39] Static file: /js/app.js
+[2025-07-02 22:45:39] Request: GET /admin
+[2025-07-02 22:45:39] Routing through index.php: /admin
+[2025-07-02 22:45:40] Request: GET /css/style.css
+[2025-07-02 22:45:40] Static file: /css/style.css
+[2025-07-02 22:45:40] Request: GET /js/app.js
+[2025-07-02 22:45:40] Static file: /js/app.js
+[2025-07-02 22:59:46] Request: GET /
+[2025-07-02 22:59:47] Routing through index.php: /
+[2025-07-02 22:59:47] Request: GET /debug-routes.php
+[2025-07-02 22:59:47] PHP file: /debug-routes.php
+[2025-07-02 22:59:47] Request: GET /css/style.css
+[2025-07-02 22:59:47] Static file: /css/style.css
+[2025-07-02 22:59:47] Request: GET /js/app.js
+[2025-07-02 22:59:47] Static file: /js/app.js
+[2025-07-02 22:59:49] Request: GET /dashboard
+[2025-07-02 22:59:49] Routing through index.php: /dashboard
+[2025-07-02 22:59:49] Request: GET /css/style.css
+[2025-07-02 22:59:49] Static file: /css/style.css
+[2025-07-02 22:59:49] Request: GET /js/app.js
+[2025-07-02 22:59:49] Static file: /js/app.js
+[2025-07-02 22:59:54] Request: GET /projects
+[2025-07-02 22:59:54] Routing through index.php: /projects
+[2025-07-02 22:59:54] Request: GET /css/style.css
+[2025-07-02 22:59:54] Static file: /css/style.css
+[2025-07-02 22:59:54] Request: GET /js/app.js
+[2025-07-02 22:59:54] Static file: /js/app.js
+[2025-07-02 22:59:55] Request: GET /admin
+[2025-07-02 22:59:55] Routing through index.php: /admin
+[2025-07-02 22:59:55] Request: GET /css/style.css
+[2025-07-02 22:59:55] Static file: /css/style.css
+[2025-07-02 22:59:55] Request: GET /js/app.js
+[2025-07-02 22:59:55] Static file: /js/app.js
+[2025-07-02 22:59:56] Request: GET /dashboard
+[2025-07-02 22:59:56] Routing through index.php: /dashboard
+[2025-07-02 22:59:56] Request: GET /css/style.css
+[2025-07-02 22:59:56] Static file: /css/style.css
+[2025-07-02 22:59:56] Request: GET /js/app.js
+[2025-07-02 22:59:56] Static file: /js/app.js
+[2025-07-02 23:01:48] Request: GET /profile
+[2025-07-02 23:01:48] Routing through index.php: /profile
+[2025-07-02 23:01:48] Request: GET /css/style.css
+[2025-07-02 23:01:48] Static file: /css/style.css
+[2025-07-02 23:01:48] Request: GET /js/app.js
+[2025-07-02 23:01:48] Static file: /js/app.js
+[2025-07-02 23:01:49] Request: GET /profile
+[2025-07-02 23:01:49] Routing through index.php: /profile
+[2025-07-02 23:01:49] Request: GET /css/style.css
+[2025-07-02 23:01:49] Static file: /css/style.css
+[2025-07-02 23:01:49] Request: GET /js/app.js
+[2025-07-02 23:01:49] Static file: /js/app.js
+[2025-07-02 23:01:50] Request: GET /projects
+[2025-07-02 23:01:50] Routing through index.php: /projects
+[2025-07-02 23:01:50] Request: GET /css/style.css
+[2025-07-02 23:01:50] Static file: /css/style.css
+[2025-07-02 23:01:50] Request: GET /js/app.js
+[2025-07-02 23:01:50] Static file: /js/app.js
+[2025-07-02 23:01:52] Request: GET /dashboard
+[2025-07-02 23:01:52] Routing through index.php: /dashboard
+[2025-07-02 23:01:52] Request: GET /css/style.css
+[2025-07-02 23:01:52] Static file: /css/style.css
+[2025-07-02 23:01:52] Request: GET /js/app.js
+[2025-07-02 23:01:52] Static file: /js/app.js
+[2025-07-02 23:02:15] Request: GET /dashboard
+[2025-07-02 23:02:15] Routing through index.php: /dashboard
+[2025-07-02 23:02:15] Request: GET /css/style.css
+[2025-07-02 23:02:15] Static file: /css/style.css
+[2025-07-02 23:02:15] Request: GET /js/app.js
+[2025-07-02 23:02:15] Static file: /js/app.js
+[2025-07-02 23:02:28] Request: GET /test-db.php
+[2025-07-02 23:02:28] Routing through index.php: /test-db.php
+[2025-07-02 23:02:31] Request: GET /test-db
+[2025-07-02 23:02:31] Routing through index.php: /test-db
+[2025-07-02 23:02:32] Request: GET /test-db
+[2025-07-02 23:02:32] Routing through index.php: /test-db
+[2025-07-02 23:02:35] Request: GET /test-db
+[2025-07-02 23:02:35] Routing through index.php: /test-db
+[2025-07-02 23:02:36] Request: GET /test-db.php
+[2025-07-02 23:02:36] Routing through index.php: /test-db.php
+[2025-07-02 23:03:13] Request: GET /dashboard
+[2025-07-02 23:03:13] Routing through index.php: /dashboard
+[2025-07-02 23:03:13] Request: GET /css/style.css
+[2025-07-02 23:03:13] Static file: /css/style.css
+[2025-07-02 23:03:13] Request: GET /js/app.js
+[2025-07-02 23:03:13] Static file: /js/app.js
+[2025-07-02 23:03:14] Request: GET /projects
+[2025-07-02 23:03:14] Routing through index.php: /projects
+[2025-07-02 23:03:14] Request: GET /css/style.css
+[2025-07-02 23:03:14] Static file: /css/style.css
+[2025-07-02 23:03:14] Request: GET /js/app.js
+[2025-07-02 23:03:14] Static file: /js/app.js
+[2025-07-02 23:03:15] Request: GET /admin
+[2025-07-02 23:03:15] Routing through index.php: /admin
+[2025-07-02 23:03:15] Request: GET /css/style.css
+[2025-07-02 23:03:15] Static file: /css/style.css
+[2025-07-02 23:03:15] Request: GET /js/app.js
+[2025-07-02 23:03:15] Static file: /js/app.js
+[2025-07-02 23:03:19] Request: GET /admin/projects
+[2025-07-02 23:03:19] Routing through index.php: /admin/projects
+[2025-07-02 23:03:19] Request: GET /css/style.css
+[2025-07-02 23:03:19] Static file: /css/style.css
+[2025-07-02 23:03:19] Request: GET /js/app.js
+[2025-07-02 23:03:19] Static file: /js/app.js
+[2025-07-02 23:03:32] Request: GET /dashboard
+[2025-07-02 23:03:32] Routing through index.php: /dashboard
+[2025-07-02 23:03:32] Request: GET /css/style.css
+[2025-07-02 23:03:32] Static file: /css/style.css
+[2025-07-02 23:03:32] Request: GET /js/app.js
+[2025-07-02 23:03:32] Static file: /js/app.js
+[2025-07-02 23:13:46] Request: GET /dashboard
+[2025-07-02 23:13:46] Routing through index.php: /dashboard
+[2025-07-02 23:13:46] Request: GET /css/style.css
+[2025-07-02 23:13:46] Static file: /css/style.css
+[2025-07-02 23:13:46] Request: GET /js/app.js
+[2025-07-02 23:13:46] Static file: /js/app.js
+[2025-07-02 23:14:57] Request: GET /profile
+[2025-07-02 23:14:57] Routing through index.php: /profile
+[2025-07-02 23:14:57] Request: GET /css/style.css
+[2025-07-02 23:14:57] Static file: /css/style.css
+[2025-07-02 23:14:57] Request: GET /js/app.js
+[2025-07-02 23:14:57] Static file: /js/app.js
+[2025-07-02 23:14:59] Request: GET /projects
+[2025-07-02 23:14:59] Routing through index.php: /projects
+[2025-07-02 23:14:59] Request: GET /css/style.css
+[2025-07-02 23:14:59] Static file: /css/style.css
+[2025-07-02 23:14:59] Request: GET /js/app.js
+[2025-07-02 23:14:59] Static file: /js/app.js
+[2025-07-02 23:42:12] Request: GET /projects
+[2025-07-02 23:42:12] Routing through index.php: /projects
+[2025-07-02 23:42:13] Request: GET /css/style.css
+[2025-07-02 23:42:13] Static file: /css/style.css
+[2025-07-02 23:42:13] Request: GET /js/app.js
+[2025-07-02 23:42:13] Static file: /js/app.js
+[2025-07-02 23:42:17] Request: GET /
+[2025-07-02 23:42:17] Routing through index.php: /
+[2025-07-02 23:42:18] Request: GET /debug-routes.php
+[2025-07-02 23:42:18] PHP file: /debug-routes.php
+[2025-07-02 23:42:18] Request: GET /css/style.css
+[2025-07-02 23:42:18] Static file: /css/style.css
+[2025-07-02 23:42:18] Request: GET /js/app.js
+[2025-07-02 23:42:18] Static file: /js/app.js
+[2025-07-03 00:27:26] Request: GET /
+[2025-07-03 00:27:26] Routing through index.php: /
+[2025-07-03 00:27:26] Request: GET /debug-routes.php
+[2025-07-03 00:27:26] PHP file: /debug-routes.php
+[2025-07-03 00:27:26] Request: GET /css/style.css
+[2025-07-03 00:27:26] Static file: /css/style.css
+[2025-07-03 00:27:26] Request: GET /js/app.js
+[2025-07-03 00:27:26] Static file: /js/app.js
+[2025-07-03 00:27:32] Request: GET /projects
+[2025-07-03 00:27:32] Routing through index.php: /projects
+[2025-07-03 00:27:32] Request: GET /css/style.css
+[2025-07-03 00:27:32] Static file: /css/style.css
+[2025-07-03 00:27:32] Request: GET /js/app.js
+[2025-07-03 00:27:32] Static file: /js/app.js
+[2025-07-03 00:27:34] Request: GET /
+[2025-07-03 00:27:34] Routing through index.php: /
+[2025-07-03 00:27:34] Request: GET /debug-routes.php
+[2025-07-03 00:27:34] PHP file: /debug-routes.php
+[2025-07-03 00:27:34] Request: GET /css/style.css
+[2025-07-03 00:27:34] Static file: /css/style.css
+[2025-07-03 00:27:34] Request: GET /js/app.js
+[2025-07-03 00:27:34] Static file: /js/app.js
+[2025-07-03 00:27:37] Request: GET /dashboard
+[2025-07-03 00:27:37] Routing through index.php: /dashboard
+[2025-07-03 00:27:37] Request: GET /css/style.css
+[2025-07-03 00:27:37] Static file: /css/style.css
+[2025-07-03 00:27:37] Request: GET /js/app.js
+[2025-07-03 00:27:37] Static file: /js/app.js

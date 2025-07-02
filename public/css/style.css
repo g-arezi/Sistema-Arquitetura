@@ -1,24 +1,110 @@
-/* Estilos customizados do Sistema de Arquitetura */
+/* Estilos customizados do Sistema de Arquitetura - Tema Escuro */
 
 :root {
-    --primary-color: #007bff;
+    --primary-color: #0d6efd;
     --secondary-color: #6c757d;
-    --success-color: #28a745;
+    --success-color: #198754;
     --warning-color: #ffc107;
     --danger-color: #dc3545;
-    --info-color: #17a2b8;
-    --dark-color: #343a40;
+    --info-color: #0dcaf0;
+    --dark-color: #212529;
     --light-color: #f8f9fa;
+    
+    /* Tema Escuro */
+    --bg-dark: #0a0a0a;
+    --bg-dark-secondary: #1a1a1a;
+    --bg-dark-tertiary: #2a2a2a;
+    --text-light: #ffffff;
+    --text-muted-light: #b0b0b0;
+    --border-dark: #404040;
+    --sidebar-bg: #121212;
+    --card-bg: #1e1e1e;
+    --hover-bg: #333333;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark) !important;
+    color: var(--text-light) !important;
 }
 
-/* Sidebar Customizations */
+/* Tema escuro global */
+.bg-light {
+    background-color: var(--bg-dark) !important;
+}
+
+.bg-white {
+    background-color: var(--bg-dark-secondary) !important;
+}
+
+.text-dark {
+    color: var(--text-light) !important;
+}
+
+.text-muted {
+    color: var(--text-muted-light) !important;
+}
+
+/* Sobrescrever classes do Bootstrap para forçar tema escuro */
+.bg-light,
+.bg-white {
+    background-color: var(--bg-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.text-dark {
+    color: var(--text-light) !important;
+}
+
+.border-light {
+    border-color: var(--border-dark) !important;
+}
+
+/* Garantir que todos os cards sejam escuros */
+.card:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todas as tabelas sejam escuras */
+.table:not(.table-dark) {
+    --bs-table-bg: var(--bg-dark-secondary);
+    --bs-table-color: var(--text-light);
+    --bs-table-border-color: var(--border-dark);
+    --bs-table-striped-bg: var(--bg-dark-tertiary);
+    --bs-table-hover-bg: var(--hover-bg);
+}
+
+/* Garantir que todos os modais sejam escuros */
+.modal-content:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todos os list-group-items sejam escuros */
+.list-group-item:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todos os dropdowns sejam escuros */
+.dropdown-menu:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.dropdown-item:not(.text-light) {
+    color: var(--text-light) !important;
+}
+
+/* Sidebar Customizations - Tema Escuro */
 .sidebar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    background: var(--sidebar-bg) !important;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    border-right: 1px solid var(--border-dark);
 }
 
 .sidebar .nav-link {
@@ -26,31 +112,56 @@ body {
     padding: 0.75rem 1rem;
     margin: 0.25rem;
     border-radius: 8px;
+    color: var(--text-muted-light) !important;
 }
 
 .sidebar .nav-link:hover {
-    background: rgba(255,255,255,0.2);
+    background: var(--hover-bg);
+    color: var(--text-light) !important;
     transform: translateX(5px);
 }
 
 .sidebar .nav-link.active {
-    background: rgba(255,255,255,0.25);
+    background: var(--primary-color);
     color: white !important;
 }
 
-/* Card Customizations */
+.sidebar .nav-link i {
+    color: inherit;
+}
+
+/* Card Customizations - Tema Escuro */
 .card {
     transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-dark);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background-color: var(--card-bg) !important;
+    color: var(--text-light) !important;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
-/* Button Customizations */
+.card-header {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.card-body {
+    background-color: var(--card-bg) !important;
+    color: var(--text-light) !important;
+}
+
+.card-footer {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Button Customizations - Tema Escuro */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -61,24 +172,388 @@ body {
     transform: translateY(-1px);
 }
 
-/* Upload Area */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: var(--bg-dark-tertiary);
+    border-color: var(--border-dark);
+    color: var(--text-light);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Forms - Tema Escuro */
+.form-control {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.form-control:focus {
+    background-color: var(--bg-dark-secondary) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-light) !important;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted-light) !important;
+}
+
+.form-select {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.form-select:focus {
+    background-color: var(--bg-dark-secondary) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-light) !important;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25) !important;
+}
+
+.form-label {
+    color: var(--text-light) !important;
+}
+
+/* Tables - Tema Escuro */
+.table {
+    color: var(--text-light) !important;
+}
+
+.table-dark {
+    --bs-table-bg: var(--bg-dark-secondary);
+    --bs-table-border-color: var(--border-dark);
+}
+
+.table th {
+    border-color: var(--border-dark) !important;
+    background-color: var(--bg-dark-tertiary) !important;
+    color: var(--text-light) !important;
+}
+
+.table td {
+    border-color: var(--border-dark) !important;
+    background-color: var(--bg-dark-secondary) !important;
+    color: var(--text-light) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bg-dark-tertiary) !important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* Upload Area - Tema Escuro */
 .upload-area {
-    border: 2px dashed #dee2e6;
+    border: 2px dashed var(--border-dark);
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
+    background-color: var(--bg-dark-secondary);
+    color: var(--text-light);
 }
 
 .upload-area:hover {
     border-color: var(--primary-color);
-    background-color: rgba(0,123,255,0.05);
+    background-color: rgba(13,110,253,0.1);
 }
 
 .upload-area.dragover {
     border-color: var(--success-color);
-    background-color: rgba(40,167,69,0.1);
+    background-color: rgba(25,135,84,0.1);
+}
+
+/* Modals - Tema Escuro */
+.modal-content {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.modal-header {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.modal-body {
+    background-color: var(--card-bg) !important;
+    color: var(--text-light) !important;
+}
+
+.modal-footer {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.modal-title {
+    color: var(--text-light) !important;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+/* Alerts - Tema Escuro */
+.alert {
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+}
+
+.alert-success {
+    background-color: rgba(25,135,84,0.1) !important;
+    border-color: var(--success-color) !important;
+    color: #75b798 !important;
+}
+
+.alert-danger {
+    background-color: rgba(220,53,69,0.1) !important;
+    border-color: var(--danger-color) !important;
+    color: #f5c2c7 !important;
+}
+
+.alert-warning {
+    background-color: rgba(255,193,7,0.1) !important;
+    border-color: var(--warning-color) !important;
+    color: #ffda6a !important;
+}
+
+.alert-info {
+    background-color: rgba(13,202,240,0.1) !important;
+    border-color: var(--info-color) !important;
+    color: #86cfda !important;
+}
+
+/* Badges - Tema Escuro */
+.badge {
+    border-radius: 6px;
+}
+
+.badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning-color) !important;
+    color: var(--dark-color) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--info-color) !important;
+    color: var(--dark-color) !important;
+}
+
+.badge.bg-secondary {
+    background-color: var(--bg-dark-tertiary) !important;
+    color: var(--text-light) !important;
+}
+
+/* Dropdown - Tema Escuro */
+.dropdown-menu {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.dropdown-item {
+    color: var(--text-light) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover-bg) !important;
+    color: var(--text-light) !important;
+}
+
+.dropdown-divider {
+    border-color: var(--border-dark) !important;
+}
+
+/* Navbar - Tema Escuro */
+.navbar {
+    background-color: var(--bg-dark-secondary) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.navbar-brand {
+    color: var(--text-light) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-muted-light) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--text-light) !important;
+}
+
+/* Breadcrumb - Tema Escuro */
+.breadcrumb {
+    background-color: var(--bg-dark-secondary) !important;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color) !important;
+}
+
+.breadcrumb-item.active {
+    color: var(--text-muted-light) !important;
+}
+
+/* Pagination - Tema Escuro */
+.page-link {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.page-link:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-light) !important;
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.page-item.disabled .page-link {
+    background-color: var(--bg-dark-secondary) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-muted-light) !important;
+}
+
+/* Progress bars - Tema Escuro */
+.progress {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-radius: 8px;
+}
+
+.progress-bar {
+    border-radius: 8px;
+}
+
+/* List Group - Tema Escuro */
+.list-group-item {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.list-group-item:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+.list-group-item.active {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Tabs - Tema Escuro */
+.nav-tabs {
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-muted-light) !important;
+    border: 1px solid transparent !important;
+    background-color: transparent !important;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-light) !important;
+    background-color: var(--hover-bg) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--text-light) !important;
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) var(--border-dark) var(--card-bg) !important;
+}
+
+.tab-content {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    border-top: none !important;
+    padding: 1rem !important;
+    color: var(--text-light) !important;
+}
+
+/* Input Groups - Tema Escuro */
+.input-group-text {
+    background-color: var(--bg-dark-tertiary) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Accordion - Tema Escuro */
+.accordion-item {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.accordion-header button {
+    background-color: var(--bg-dark-tertiary) !important;
+    color: var(--text-light) !important;
+    border: none !important;
+}
+
+.accordion-header button:not(.collapsed) {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.accordion-body {
+    background-color: var(--card-bg) !important;
+    color: var(--text-light) !important;
+}
+
+/* Scrollbar - Tema Escuro */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted-light);
 }
 
 /* Status Badges */
@@ -243,21 +718,517 @@ body {
     transition: width 0.6s ease;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Tema Escuro */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--bg-dark-secondary);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: var(--border-dark);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: var(--text-muted-light);
+}
+
+/* Estilo específico para cards do dashboard */
+.stats-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-dark-tertiary) 100%);
+    border: 1px solid var(--border-dark);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.stats-card .display-4 {
+    margin-bottom: 1rem;
+}
+
+.stats-card h3 {
+    color: var(--text-light);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stats-card p {
+    color: var(--text-muted-light);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Cards com bordas coloridas */
+.card.border-primary {
+    border-left: 4px solid var(--primary-color) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    border-right: 1px solid var(--border-dark) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.card.border-success {
+    border-left: 4px solid var(--success-color) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    border-right: 1px solid var(--border-dark) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.card.border-warning {
+    border-left: 4px solid var(--warning-color) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    border-right: 1px solid var(--border-dark) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.card.border-danger {
+    border-left: 4px solid var(--danger-color) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    border-right: 1px solid var(--border-dark) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+.card.border-info {
+    border-left: 4px solid var(--info-color) !important;
+    border-top: 1px solid var(--border-dark) !important;
+    border-right: 1px solid var(--border-dark) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+}
+
+/* Efeito hover para elementos clicáveis */
+.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clickable:hover {
+    background-color: var(--hover-bg) !important;
+    transform: scale(1.02);
+}
+
+/* Estilo para botões de ação */
+.action-buttons .btn {
+    margin: 0 0.25rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Loading states */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid var(--text-muted-light);
+    border-radius: 50%;
+    border-top: 0.25rem solid var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+/* Animações suaves */
+.smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .sidebar {
+        background-color: var(--sidebar-bg) !important;
+    }
+    
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+    
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* Melhorias de contraste */
+.text-primary {
+    color: #4dabf7 !important;
+}
+
+.text-success {
+    color: #51cf66 !important;
+}
+
+.text-warning {
+    color: #ffd43b !important;
+}
+
+.text-danger {
+    color: #ff6b6b !important;
+}
+
+.text-info {
+    color: #339af0 !important;
+}
+
+/* Highlight para elementos importantes */
+.highlight {
+    background: linear-gradient(90deg, transparent, rgba(13,110,253,0.1), transparent);
+    animation: highlight 2s ease-in-out;
+}
+
+@keyframes highlight {
+    0%, 100% { background: transparent; }
+    50% { background: linear-gradient(90deg, transparent, rgba(13,110,253,0.1), transparent); }
+}
+
+/* Tema escuro para elementos de formulário específicos */
+.form-check-input {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-label {
+    color: var(--text-light) !important;
+}
+
+.form-range {
+    background-color: var(--bg-dark-secondary) !important;
+}
+
+.form-range::-webkit-slider-thumb {
+    background-color: var(--primary-color) !important;
+}
+
+.form-range::-moz-range-thumb {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+}
+
+/* Tema escuro para elementos de upload */
+.upload-area {
+    background-color: var(--bg-dark-secondary) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.upload-area:hover {
+    background-color: rgba(13,110,253,0.1) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.file-info {
+    background-color: rgba(13,110,253,0.1) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Sobrescrever classes do Bootstrap para forçar tema escuro */
+.bg-light,
+.bg-white {
+    background-color: var(--bg-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.text-dark {
+    color: var(--text-light) !important;
+}
+
+.border-light {
+    border-color: var(--border-dark) !important;
+}
+
+/* Garantir que todos os cards sejam escuros */
+.card:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todas as tabelas sejam escuras */
+.table:not(.table-dark) {
+    --bs-table-bg: var(--bg-dark-secondary);
+    --bs-table-color: var(--text-light);
+    --bs-table-border-color: var(--border-dark);
+    --bs-table-striped-bg: var(--bg-dark-tertiary);
+    --bs-table-hover-bg: var(--hover-bg);
+}
+
+/* Garantir que todos os modais sejam escuros */
+.modal-content:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todos os list-group-items sejam escuros */
+.list-group-item:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Garantir que todos os dropdowns sejam escuros */
+.dropdown-menu:not(.bg-dark) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.dropdown-item:not(.text-light) {
+    color: var(--text-light) !important;
+}
+
+/* Força aplicação em elementos específicos do admin */
+.admin h1, .admin h2, .admin h3, .admin h4, .admin h5, .admin h6 {
+    color: var(--text-light) !important;
+}
+
+.admin p {
+    color: var(--text-light) !important;
+}
+
+.admin .text-muted {
+    color: var(--text-muted-light) !important;
+}
+
+/* Títulos e textos principais */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-light) !important;
+}
+
+p {
+    color: var(--text-light) !important;
+}
+
+.lead {
+    color: var(--text-light) !important;
+}
+
+/* Links */
+a:not(.btn):not(.nav-link):not(.dropdown-item) {
+    color: var(--primary-color) !important;
+}
+
+a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+    color: #4dabf7 !important;
+}
+
+/* Tooltip para tema escuro */
+.tooltip .tooltip-inner {
+    background-color: var(--bg-dark-tertiary) !important;
+    color: var(--text-light) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.tooltip .tooltip-arrow::before {
+    border-color: var(--bg-dark-tertiary) !important;
+}
+
+/* Popover para tema escuro */
+.popover {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.popover-header {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.popover-body {
+    color: var(--text-light) !important;
+}
+
+/* Spinner customizado */
+.spinner-border {
+    border-color: var(--text-muted-light);
+    border-right-color: var(--primary-color);
+}
+
+/* Toast para tema escuro */
+.toast {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.toast-header {
+    background-color: var(--bg-dark-tertiary) !important;
+    border-bottom: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Collapse para tema escuro */
+.collapse.show {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Offcanvas para tema escuro */
+.offcanvas {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.offcanvas-body {
+    color: var(--text-light) !important;
+}
+
+/* Garantir compatibilidade com elementos dinâmicos */
+[class*="bg-white"] {
+    background-color: var(--bg-dark) !important;
+}
+
+[class*="bg-light"] {
+    background-color: var(--bg-dark) !important;
+}
+
+[class*="text-dark"] {
+    color: var(--text-light) !important;
+}
+
+/* Media queries para responsividade do tema escuro */
+@media (max-width: 768px) {
+    .sidebar {
+        background-color: var(--sidebar-bg) !important;
+        border-right: 1px solid var(--border-dark) !important;
+    }
+    
+    .offcanvas-backdrop {
+        background-color: rgba(0,0,0,0.8) !important;
+    }
+}
+
+/* Animações aprimoradas para o tema escuro */
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px var(--primary-color); }
+    50% { box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color); }
+}
+
+.glow-effect {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Estados de hover aprimorados */
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+}
+
+/* Efeitos de foco melhorados */
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Garantir que textos sejam legíveis */
+small, .small {
+    color: var(--text-muted-light) !important;
+}
+
+.text-muted {
+    color: var(--text-muted-light) !important;
+}
+
+/* Melhorar contraste de ícones */
+.bi {
+    opacity: 1 !important;
+}
+
+/* Estilo para botões de fechamento no tema escuro */
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.btn-close:hover {
+    filter: invert(1) grayscale(100%) brightness(150%);
+}
+
+/* Tema escuro para elementos de formulário específicos */
+.form-check-input {
+    background-color: var(--bg-dark-secondary) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-label {
+    color: var(--text-light) !important;
+}
+
+.form-range {
+    background-color: var(--bg-dark-secondary) !important;
+}
+
+.form-range::-webkit-slider-thumb {
+    background-color: var(--primary-color) !important;
+}
+
+.form-range::-moz-range-thumb {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+}
+
+/* Tema escuro para elementos de upload */
+.upload-area {
+    background-color: var(--bg-dark-secondary) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.upload-area:hover {
+    background-color: rgba(13,110,253,0.1) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.file-info {
+    background-color: rgba(13,110,253,0.1) !important;
+    border: 1px solid var(--border-dark) !important;
+    color: var(--text-light) !important;
 }

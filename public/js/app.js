@@ -1,6 +1,9 @@
 // Sistema de Arquitetura - JavaScript Functions
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Apply dark theme classes globally
+    applyDarkTheme();
+    
     // Initialize tooltips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -26,7 +29,141 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile sidebar toggle
     initMobileSidebar();
+    
+    // Initialize dark theme components
+    initDarkThemeComponents();
 });
+
+// Apply Dark Theme
+function applyDarkTheme() {
+    // Apply dark theme to body if not already applied
+    if (!document.body.classList.contains('bg-dark')) {
+        document.body.classList.add('bg-dark', 'text-light');
+    }
+    
+    // Apply dark theme to existing cards
+    const cards = document.querySelectorAll('.card:not(.bg-dark)');
+    cards.forEach(card => {
+        card.classList.add('bg-dark', 'border-secondary');
+        card.classList.remove('bg-white', 'border-light');
+        
+        // Update card headers and bodies
+        const headers = card.querySelectorAll('.card-header');
+        headers.forEach(header => {
+            header.classList.add('bg-dark', 'border-secondary', 'text-light');
+        });
+        
+        const bodies = card.querySelectorAll('.card-body');  
+        bodies.forEach(body => {
+            body.classList.add('bg-dark', 'text-light');
+        });
+        
+        const footers = card.querySelectorAll('.card-footer');
+        footers.forEach(footer => {
+            footer.classList.add('bg-dark', 'border-secondary', 'text-light');
+        });
+    });
+    
+    // Apply dark theme to tables
+    const tables = document.querySelectorAll('.table:not(.table-dark)');
+    tables.forEach(table => {
+        table.classList.add('table-dark');
+    });
+    
+    // Apply dark theme to modals
+    const modals = document.querySelectorAll('.modal-content:not(.bg-dark)');
+    modals.forEach(modal => {
+        modal.classList.add('bg-dark', 'text-light', 'border-secondary');
+        
+        const headers = modal.querySelectorAll('.modal-header');
+        headers.forEach(header => {
+            header.classList.add('bg-dark', 'border-secondary', 'text-light');
+        });
+        
+        const bodies = modal.querySelectorAll('.modal-body');
+        bodies.forEach(body => {
+            body.classList.add('bg-dark', 'text-light');
+        });
+        
+        const footers = modal.querySelectorAll('.modal-footer');
+        footers.forEach(footer => {
+            footer.classList.add('bg-dark', 'border-secondary', 'text-light');
+        });
+    });
+    
+    // Apply dark theme to list groups
+    const listGroups = document.querySelectorAll('.list-group-item:not(.bg-dark)');
+    listGroups.forEach(item => {
+        item.classList.add('bg-dark', 'border-secondary', 'text-light');
+    });
+    
+    // Apply dark theme to dropdowns
+    const dropdowns = document.querySelectorAll('.dropdown-menu:not(.bg-dark)');
+    dropdowns.forEach(dropdown => {
+        dropdown.classList.add('bg-dark', 'border-secondary');
+        
+        const items = dropdown.querySelectorAll('.dropdown-item');
+        items.forEach(item => {
+            item.classList.add('text-light');
+        });
+    });
+    
+    // Update text colors
+    const textElements = document.querySelectorAll('.text-dark:not(.text-light)');
+    textElements.forEach(element => {
+        element.classList.remove('text-dark');
+        element.classList.add('text-light');
+    });
+}
+
+// Initialize Dark Theme Components
+function initDarkThemeComponents() {
+    // Add hover effects to clickable cards
+    const clickableCards = document.querySelectorAll('.card[onclick], .card[style*="cursor"]');
+    clickableCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+        });
+    });
+    
+    // Enhance form controls appearance
+    const formControls = document.querySelectorAll('.form-control, .form-select');
+    formControls.forEach(control => {
+        control.addEventListener('focus', function() {
+            this.style.borderColor = '#0d6efd';
+            this.style.boxShadow = '0 0 0 0.2rem rgba(13,110,253,0.25)';
+        });
+        
+        control.addEventListener('blur', function() {
+            this.style.borderColor = '#404040';
+            this.style.boxShadow = 'none';
+        });
+    });
+    
+    // Add loading spinner to buttons when clicked
+    const submitButtons = document.querySelectorAll('button[type="submit"]');
+    submitButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (!this.disabled) {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="bi bi-arrow-clockwise spinner me-2"></i>' + 'Carregando...';
+                this.disabled = true;
+                
+                // Re-enable after form submission (fallback)
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 5000);
+            }
+        });
+    });
+}
 
 // File Upload Functionality
 function initFileUpload() {

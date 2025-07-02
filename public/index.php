@@ -6,24 +6,45 @@ use App\Core\Router;
 use App\Core\Database;
 use App\Core\Session;
 
+// Detectar ambiente
+$isProduction = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'production') 
+    || (isset($_SERVER['HTTP_HOST']) && !in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']))
+    || file_exists(__DIR__ . '/../.env.production');
+
+// Configurar tratamento de erros baseado no ambiente
+if ($isProduction) {
+    // Produção: Desabilitar exibição de erros
+    error_reporting(E_ALL);
+    ini_set('display_errors', 0);
+    ini_set('log_errors', 1);
+    ini_set('error_log', '/var/log/sistema-arquitetura/php_errors.log');
+} else {
+    // Desenvolvimento: Exibir erros apenas em debug mode
+    $debugMode = isset($_GET['debug']);
+    if ($debugMode) {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        echo '<h2>Debug Mode Enabled</h2>';
+        echo '<pre>';
+        echo 'Request URI: ' . $_SERVER['REQUEST_URI'] . "\n";
+        echo 'PHP Version: ' . phpversion() . "\n";
+        echo 'Environment: ' . ($isProduction ? 'Production' : 'Development') . "\n";
+        echo '</pre>';
+    }
+}
+
 // Inicializar sessão
 Session::start();
 
-// Configurar cabeçalhos de segurança
+// Configurar cabeçalhos de segurança aprimorados
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
 
-// Debug mode
-$debugMode = isset($_GET['debug']);
-if ($debugMode) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    echo '<h2>Debug Mode Enabled</h2>';
-    echo '<pre>';
-    echo 'Request URI: ' . $_SERVER['REQUEST_URI'] . "\n";
-    echo 'PHP Version: ' . phpversion() . "\n";
-    echo '</pre>';
+if ($isProduction) {
+    header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+    header('Content-Security-Policy: default-src \'self\'; script-src \'self\' \'unsafe-inline\' https://cdn.jsdelivr.net; style-src \'self\' \'unsafe-inline\' https://cdn.jsdelivr.net; font-src \'self\' https://cdn.jsdelivr.net; img-src \'self\' data: https:; connect-src \'self\';');
 }
 
 // Inicializar roteador

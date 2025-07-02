@@ -18,6 +18,29 @@
     },
     "scripts": {
         "serve": "php -S localhost:8000 -t public public/router.php",
-        "install-db": "php scripts/install.php"
+        "install-db": "php scripts/install.php",
+        "deploy": "bash scripts/deploy.sh",
+        "deploy-auto": "powershell -ExecutionPolicy RemoteSigned -File scripts\\auto-deploy.ps1",
+        "deploy-hospedagem": "powershell -ExecutionPolicy RemoteSigned -File scripts\\deploy-hospedagem.ps1",
+        "deploy-windows": "scripts\\deploy-iis.bat",
+        "deploy-windows-ps": "powershell -ExecutionPolicy RemoteSigned -File scripts\\deploy-iis.ps1",
+        "deploy-xampp": "powershell -ExecutionPolicy RemoteSigned -File scripts\\deploy-xampp.ps1 -XamppPath \"E:\\ferramentas\\XAMPP\" -SitePath \"E:\\ferramentas\\XAMPP\\htdocs\\sistema-arquitetura\"",
+        "deploy-test": "powershell -ExecutionPolicy RemoteSigned -File scripts\\deploy-test.ps1",
+        "backup": "bash scripts/backup.sh",
+        "backup-windows": "scripts\\backup.bat",
+        "backup-windows-ps": "powershell -ExecutionPolicy RemoteSigned -File scripts\\backup.ps1",
+        "health-check": "bash scripts/health-check.sh",
+        "health-check-windows": "scripts\\health-check.bat",
+        "health-check-windows-ps": "powershell -ExecutionPolicy RemoteSigned -File scripts\\health-check.ps1",
+        "prod-install": "composer install --no-dev --optimize-autoloader",
+        "prod-update": "composer update --no-dev --optimize-autoloader",
+        "prepare-hospedagem": "bash scripts/prepare-hospedagem.sh",
+        "prepare-hospedagem-windows": "scripts\\prepare-hospedagem.bat",
+        "package-host": "bash scripts/prepare-hospedagem.sh",
+        "package-host-windows": "scripts\\prepare-hospedagem.bat",
+        "clear-cache": "composer clear-cache && rm -rf storage/temp/*",
+        "clear-cache-windows": "composer clear-cache && if exist storage\\temp rmdir /s /q storage\\temp && mkdir storage\\temp",
+        "check-permissions": "find . -type f -not -perm 644 -o -type d -not -perm 755",
+        "security-check": "composer audit"
     }
 }

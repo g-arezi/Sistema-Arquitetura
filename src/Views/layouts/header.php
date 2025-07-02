@@ -8,37 +8,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <style>
+        /* Sobrescrevendo estilos inline para garantir o tema escuro */
         .sidebar {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--sidebar-bg) !important;
+            border-right: 1px solid var(--border-dark);
         }
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
+            color: var(--text-muted-light) !important;
             border-radius: 8px;
             margin: 2px 0;
+            transition: all 0.3s ease;
         }
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            color: white;
-            background: rgba(255,255,255,0.1);
+            color: var(--text-light) !important;
+            background: var(--hover-bg) !important;
+        }
+        .sidebar .nav-link.active {
+            background: var(--primary-color) !important;
         }
         .content-wrapper {
             min-height: 100vh;
+            background-color: var(--bg-dark) !important;
         }
         .card {
-            border: none;
-            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+            border: 1px solid var(--border-dark) !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
             border-radius: 12px;
+            background-color: var(--card-bg) !important;
         }
         .btn {
             border-radius: 8px;
         }
         .navbar-brand {
             font-weight: bold;
+            color: var(--text-light) !important;
+        }
+        .sidebar h4 {
+            color: var(--text-light) !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .sidebar .bi-building {
+            color: var(--primary-color) !important;
         }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-dark text-light">
     <?php if (isset($showSidebar) && $showSidebar): ?>
     <div class="container-fluid">
         <div class="row">
@@ -46,8 +62,8 @@
             <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
-                        <h4 class="text-white">
-                            <i class="bi bi-building"></i>
+                        <h4 class="text-light">
+                            <i class="bi bi-building text-primary"></i>
                             Sistema Arquitetura
                         </h4>
                     </div>
@@ -90,9 +106,9 @@
             </nav>
 
             <!-- Main content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content-wrapper">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content-wrapper bg-dark">
     <?php else: ?>
-    <div class="container-fluid content-wrapper">
+    <div class="container-fluid content-wrapper bg-dark">
     <?php endif; ?>
     
     <!-- Alerts -->

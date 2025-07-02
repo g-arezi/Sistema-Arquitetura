@@ -1,13 +1,13 @@
 <?php return array(
     'root' => array(
         'name' => 'sistema/arquitetura',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '016df5b2675e50e5fc3e8bd8524d175c5488ec85',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'phpmailer/phpmailer' => array(
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'sistema/arquitetura' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '016df5b2675e50e5fc3e8bd8524d175c5488ec85',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

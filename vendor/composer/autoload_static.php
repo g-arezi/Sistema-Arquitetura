@@ -29,7 +29,38 @@ class ComposerStaticInit31a603dde978ca0a61c5d4ab7af5bbbb
     );
 
     public static $classMap = array (
+        'App\\Controllers\\AdminController' => __DIR__ . '/../..' . '/src/Controllers/AdminController.php',
+        'App\\Controllers\\AuthController' => __DIR__ . '/../..' . '/src/Controllers/AuthController.php',
+        'App\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/src/Controllers/DashboardController.php',
+        'App\\Controllers\\HelpController' => __DIR__ . '/../..' . '/src/Controllers/HelpController.php',
+        'App\\Controllers\\HelperController' => __DIR__ . '/../..' . '/src/Controllers/HelperController.php',
+        'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/src/Controllers/HomeController.php',
+        'App\\Controllers\\ProjectController' => __DIR__ . '/../..' . '/src/Controllers/ProjectController.php',
+        'App\\Controllers\\RedirectController' => __DIR__ . '/../..' . '/src/Controllers/RedirectController.php',
+        'App\\Controllers\\TestController' => __DIR__ . '/../..' . '/src/Controllers/TestController.php',
+        'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/src/Controllers/UserController.php',
+        'App\\Core\\Database' => __DIR__ . '/../..' . '/src/Core/Database.php',
+        'App\\Core\\Router' => __DIR__ . '/../..' . '/src/Core/Router.php',
+        'App\\Core\\Session' => __DIR__ . '/../..' . '/src/Core/Session.php',
+        'App\\Core\\View' => __DIR__ . '/../..' . '/src/Core/View.php',
+        'App\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/src/Middleware/AdminMiddleware.php',
+        'App\\Middleware\\AuthMiddleware' => __DIR__ . '/../..' . '/src/Middleware/AuthMiddleware.php',
+        'App\\Models\\Document' => __DIR__ . '/../..' . '/src/Models/Document.php',
+        'App\\Models\\DocumentFile' => __DIR__ . '/../..' . '/src/Models/DocumentFile.php',
+        'App\\Models\\Project' => __DIR__ . '/../..' . '/src/Models/Project.php',
+        'App\\Models\\ProjectFile' => __DIR__ . '/../..' . '/src/Models/ProjectFile.php',
+        'App\\Models\\User' => __DIR__ . '/../..' . '/src/Models/User.php',
+        'App\\Models\\UserFile' => __DIR__ . '/../..' . '/src/Models/UserFile.php',
+        'App\\Services\\EmailService' => __DIR__ . '/../..' . '/src/Services/EmailService.php',
+        'App\\Services\\FileUploadService' => __DIR__ . '/../..' . '/src/Services/FileUploadService.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PHPMailer\\PHPMailer\\DSNConfigurator' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/DSNConfigurator.php',
+        'PHPMailer\\PHPMailer\\Exception' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/Exception.php',
+        'PHPMailer\\PHPMailer\\OAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuth.php',
+        'PHPMailer\\PHPMailer\\OAuthTokenProvider' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuthTokenProvider.php',
+        'PHPMailer\\PHPMailer\\PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
+        'PHPMailer\\PHPMailer\\POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/POP3.php',
+        'PHPMailer\\PHPMailer\\SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/SMTP.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
